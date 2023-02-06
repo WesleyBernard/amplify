@@ -57,31 +57,28 @@ const App = ({ signOut }) => {
 
   return (
     <View className="App">
-      <Heading level={1}>My Notes App</Heading>
+      <Heading level={1}>Learning log</Heading>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
-          <TextField
-            name="name"
-            placeholder="Note Name"
-            label="Note Name"
-            labelHidden
-            variation="quiet"
-            required
-          />
+          <label for="leadership principles"></label>
+          <select name="leadership principles" id="Leadership principles">
+            <option value="Think Big">Think Big</option>
+            <option value="Frugality">Frugality</option>
+          </select>
           <TextField
             name="description"
-            placeholder="Note Description"
-            label="Note Description"
+            placeholder="Despcribe what you learned"
+            label="Description"
             labelHidden
             variation="quiet"
             required
           />
           <Button type="submit" variation="primary">
-            Create Note
+            Save Learning
           </Button>
         </Flex>
       </View>
-      <Heading level={2}>Current Notes</Heading>
+      <Heading level={2}>Recent learning</Heading>
       <View margin="3rem 0">
         {notes.map((note) => (
           <Flex
@@ -95,7 +92,7 @@ const App = ({ signOut }) => {
             </Text>
             <Text as="span">{note.description}</Text>
             <Button variation="link" onClick={() => deleteNote(note)}>
-              Delete note
+              Delete
             </Button>
           </Flex>
         ))}
