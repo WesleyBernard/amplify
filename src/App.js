@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
-import { API, Storage } from 'aws-amplify';
+import { API, Storage, } from 'aws-amplify';
 import {
   Button,
   Flex,
@@ -17,13 +17,23 @@ import {
   createNote as createNoteMutation,
   deleteNote as deleteNoteMutation,
 } from "./graphql/mutations";
+import { Auth } from "aws-amplify";
 
 const App = ({ signOut }) => {
   const [notes, setNotes] = useState([]);
+  // const user = Auth.currentAuthenticatedUser()
 
   useEffect(() => {
     fetchNotes();
   }, []);
+
+  async function getUserInfo(){
+    const user = await Auth.currentAuthenticatedUser()
+    console.log(user.username);
+    return user.username
+  }
+
+  const user = getUserInfo()
 
   async function fetchNotes() {
     const apiData = await API.graphql({ query: listNotes });
@@ -38,11 +48,13 @@ const App = ({ signOut }) => {
 
   async function createNote(event) {
     event.preventDefault();
+    let user = await getUserInfo()
     const form = new FormData(event.target);
     const data = {
       name: form.get("leadership principles"),
       description: form.get("description"),
       date: getdate(),
+      user: user.username
     };
     await API.graphql({
       query: createNoteMutation,
@@ -63,7 +75,7 @@ const App = ({ signOut }) => {
 
   return (
     <View className="App">
-      <Heading level={1}>Learning log</Heading>
+      <Heading level={1}>Learning log </Heading>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           <label for="leadership principles"></label>
@@ -86,7 +98,10 @@ const App = ({ signOut }) => {
       </View>
       <Heading level={2}>Recent learning</Heading>
       <View margin="3rem 0">
-        {notes.map((note) => (
+        {notes.filter(function(notes){
+          return notes.user === "blackfidelis"
+        })
+        .map((note) => (
           <Flex
             key={note.id || note.name}
             direction="row"
@@ -95,6 +110,9 @@ const App = ({ signOut }) => {
           >
             <Text as="span" >
               {note.date}
+            </Text>
+            <Text as="span" >
+              {note.user}
             </Text>
             <Text as="strong" fontWeight={700}>
               {note.name}
