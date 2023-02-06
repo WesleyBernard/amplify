@@ -31,12 +31,18 @@ const App = ({ signOut }) => {
     setNotes(notesFromAPI);
   }
 
+  function getdate() {
+    let currentDate = new Date().toLocaleDateString();
+    return currentDate
+  };
+
   async function createNote(event) {
     event.preventDefault();
     const form = new FormData(event.target);
     const data = {
-      name: form.get("name"),
+      name: form.get("leadership principles"),
       description: form.get("description"),
+      date: getdate(),
     };
     await API.graphql({
       query: createNoteMutation,
@@ -61,7 +67,7 @@ const App = ({ signOut }) => {
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           <label for="leadership principles"></label>
-          <select name="leadership principles" id="Leadership principles">
+          <select name="leadership principles" id="leadership principles">
             <option value="Think Big">Think Big</option>
             <option value="Frugality">Frugality</option>
           </select>
@@ -87,6 +93,9 @@ const App = ({ signOut }) => {
             justifyContent="center"
             alignItems="center"
           >
+            <Text as="strong" fontWeight={700}>
+              {note.date}
+            </Text>
             <Text as="strong" fontWeight={700}>
               {note.name}
             </Text>
