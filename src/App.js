@@ -93,7 +93,7 @@ const App = ({ signOut }) => {
             justifyContent="center"
             alignItems="center"
           >
-            <Text as="strong" fontWeight={700}>
+            <Text as="span" >
               {note.date}
             </Text>
             <Text as="strong" fontWeight={700}>
