@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
-import { API, Storage, } from 'aws-amplify';
+import { API, } from 'aws-amplify';
 import {
   Button,
   Flex,
   Heading,
-  Image,
   Text,
   TextField,
   View,
@@ -27,16 +26,14 @@ const App = ({ signOut }) => {
     fetchNotes();
   }, []);
 
-  async function getUserInfo(){
-    const user = await Auth.currentAuthenticatedUser()
-    console.log(user.username);
-    return user.username
-  }
-
-  const user = getUserInfo()
-
   async function fetchNotes() {
-    const apiData = await API.graphql({ query: listNotes });
+    let user = await Auth.currentAuthenticatedUser()
+    let filter = {
+      user: {
+        eq: user.username
+      }
+    }
+    const apiData = await API.graphql({ query: listNotes, variables: {filter: filter} });
     const notesFromAPI = apiData.data.listNotes.items;
     setNotes(notesFromAPI);
   }
@@ -48,7 +45,7 @@ const App = ({ signOut }) => {
 
   async function createNote(event) {
     event.preventDefault();
-    let user = await getUserInfo()
+    let user = await Auth.currentAuthenticatedUser()
     const form = new FormData(event.target);
     const data = {
       name: form.get("leadership principles"),
@@ -82,6 +79,20 @@ const App = ({ signOut }) => {
           <select name="leadership principles" id="leadership principles">
             <option value="Think Big">Think Big</option>
             <option value="Frugality">Frugality</option>
+            <option value="Customer Obsession">Customer Obsession</option>
+            <option value="Ownership">Ownership</option>
+            <option value="Invent and simplify">Invent and simplify</option>
+            <option value="Are right a lot">Are right a lot</option>
+            <option value="Learn and be curious">Learn and be curious</option>
+            <option value="Hire and Develop the best">Hire and develop the best</option>
+            <option value="Insist on the highest standards">Insist on the highest standards</option>
+            <option value="Earn trust">Earn trust</option>
+            <option value="Bias for action">Bias for action</option>
+            <option value="Dive deep">Dive deep</option>
+            <option value="Have backbone; Disagree and commit">Have backbone; Disagree and commit</option>
+            <option value="Deliver results">Deliver results</option>
+            <option value="Strive to be Earth's best employer">Strive to be Earth's best employer</option>
+            <option value="Success and scale bring broad responsibility">Success and scale bring broad responsibility</option>
           </select>
           <TextField
             name="description"
@@ -98,10 +109,8 @@ const App = ({ signOut }) => {
       </View>
       <Heading level={2}>Recent learning</Heading>
       <View margin="3rem 0">
-        {notes.filter(function(notes){
-          return notes.user === "blackfidelis"
-        })
-        .map((note) => (
+        {notes.map((note) => (
+          <div>
           <Flex
             key={note.id || note.name}
             direction="row"
@@ -122,6 +131,7 @@ const App = ({ signOut }) => {
               Delete
             </Button>
           </Flex>
+          </div>
         ))}
       </View>
       <Button onClick={signOut}>Sign Out</Button>
