@@ -110,23 +110,20 @@ const App = ({ signOut }) => {
       <Heading level={2}>Recent learning</Heading>
       <View margin="3rem 0">
         {notes.map((note) => (
-          <div>
+          <div margin="5">
           <Flex
             key={note.id || note.name}
             direction="row"
             justifyContent="center"
             alignItems="center"
           >
-            <Text as="span" >
+            <Text as="span" margin="1rem">
               {note.date}
-            </Text>
-            <Text as="span" >
-              {note.user}
             </Text>
             <Text as="strong" fontWeight={700}>
               {note.name}
             </Text>
-            <Text as="span">{note.description}</Text>
+            <Text as="paragraph" width="50%">{note.description}</Text>
             <Button variation="link" onClick={() => deleteNote(note)}>
               Delete
             </Button>
