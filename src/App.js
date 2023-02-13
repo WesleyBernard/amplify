@@ -48,7 +48,7 @@ const App = ({ signOut }) => {
     let user = await Auth.currentAuthenticatedUser()
     const form = new FormData(event.target);
     const data = {
-      name: form.get("leadership principles"),
+      lp: form.get("leadership principles"),
       description: form.get("description"),
       date: getdate(),
       user: user.username
@@ -112,7 +112,7 @@ const App = ({ signOut }) => {
         {notes.map((note) => (
           <div margin="5">
           <Flex
-            key={note.id || note.name}
+            key={note.id || note.lp}
             direction="row"
             justifyContent="center"
             alignItems="center"
@@ -121,7 +121,7 @@ const App = ({ signOut }) => {
               {note.date}
             </Text>
             <Text as="strong" fontWeight={700}>
-              {note.name}
+              {note.lp}
             </Text>
             <Text as="paragraph" width="50%">{note.description}</Text>
             <Button variation="link" onClick={() => deleteNote(note)}>
