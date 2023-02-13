@@ -48,7 +48,7 @@ const App = ({ signOut }) => {
     let user = await Auth.currentAuthenticatedUser()
     const form = new FormData(event.target);
     const data = {
-      lp: form.get("leadership principles"),
+      LP: form.get("leadership principles"),
       description: form.get("description"),
       date: getdate(),
       user: user.username
@@ -76,7 +76,7 @@ const App = ({ signOut }) => {
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           <label for="leadership principles"></label>
-          <select name="leadership principles" id="leadership principles">
+          <select color="#14248A" name="leadership principles" id="leadership principles">
             <option value="Think Big">Think Big</option>
             <option value="Frugality">Frugality</option>
             <option value="Customer Obsession">Customer Obsession</option>
@@ -112,7 +112,7 @@ const App = ({ signOut }) => {
         {notes.map((note) => (
           <div margin="5">
           <Flex
-            key={note.id || note.lp}
+            key={note.id || note.LP}
             direction="row"
             justifyContent="center"
             alignItems="center"
@@ -121,7 +121,7 @@ const App = ({ signOut }) => {
               {note.date}
             </Text>
             <Text as="strong" fontWeight={700}>
-              {note.lp}
+              {note.LP}
             </Text>
             <Text as="paragraph" width="50%">{note.description}</Text>
             <Button variation="link" onClick={() => deleteNote(note)}>
