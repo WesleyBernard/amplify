@@ -2,6 +2,14 @@
   background-color: gray;
 }
 
+select{
+  color: white;
+}
+
+::placeholder{
+  color: white;
+}
+
 .App {
   text-align: center;
   background-color: gray;
