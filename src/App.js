@@ -72,11 +72,11 @@ const App = ({ signOut }) => {
 
   return (
     <View className="App">
-      <Heading level={1} color="white">Learning log </Heading>
+      <Heading level={1}>Learning log </Heading>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           <label for="leadership principles"></label>
-          <select color="white" name="leadership principles" id="leadership principles">
+          <select name="leadership principles" id="leadership principles">
             <option value="Think Big">Think Big</option>
             <option value="Frugality">Frugality</option>
             <option value="Customer Obsession">Customer Obsession</option>
@@ -107,7 +107,7 @@ const App = ({ signOut }) => {
           </Button>
         </Flex>
       </View>
-      <Heading level={2} color="white">Recent learning</Heading>
+      <Heading level={2}>Recent learning</Heading>
       <View margin="3rem 0">
         {notes.map((note) => (
           <div margin="5">
@@ -117,13 +117,13 @@ const App = ({ signOut }) => {
             justifyContent="center"
             alignItems="center"
           >
-            <Text as="span" margin="1rem" color="white">
+            <Text as="span" margin="1rem">
               {note.date}
             </Text>
-            <Text as="strong" color="white" fontWeight={700}>
+            <Text as="strong" fontWeight={700}>
               {note.LP}
             </Text>
-            <Text as="paragraph" color="white" width="50%">{note.description}</Text>
+            <Text as="paragraph" width="50%">{note.description}</Text>
             <Button variation="link" color="white" onClick={() => deleteNote(note)}>
               Delete
             </Button>
@@ -131,7 +131,7 @@ const App = ({ signOut }) => {
           </div>
         ))}
       </View>
-      <Button onClick={signOut} color="white">Sign Out</Button>
+      <Button onClick={signOut}>Sign Out</Button>
     </View>
   );
 };
